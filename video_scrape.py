@@ -3,12 +3,15 @@
 # Team 4
 # January 30, 2021
 
+from parser import parse
 import vlc  # to display video source in vlc media player
 import requests # to download html page of sign savvy
 import time
 from bs4 import BeautifulSoup # to parse html page into video source
 
-tb_text = ["Hello","Night","Plane","Dance","LOL","Clock"] # test bench data
+msg = input("Enter a sentence: ")
+
+tb_text = parse(msg) # test bench data
 #TODO: Get tokenized ASL syntax 
 # Speech to Text --> Text to ASL syntax --> (Input Here)
 

@@ -8,7 +8,7 @@ def parse(text):
     translation = translate(sentence)
     result = []
     for word in translation[0]:
-      result.append((word['text'].lower(), word['lemma'].lower()))
+      result.append(word['text'].lower())
   return result
 
 def getLemmaSequence(meta):
@@ -135,6 +135,3 @@ def translate(parse):
   translation = getLemmaSequence(meta)
   return translation
 
-while True:
-  userInput = input("Enter a sentence: ")
-  print(parse(userInput))
