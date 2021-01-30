@@ -1,19 +1,14 @@
-import azure.cognitiveservices.speech as speechsdk
 import stanfordnlp
-from operator import itemgetter, attrgetter, methodcaller
 
-nlp = stanfordnlp.Pipeline(processors='tokenize,mwt,pos,lemma,depparse', treebank='en_ewt', use_gpu=False, pos_batch_size=3000) # Build the pipeline, specify part-of-speech processor's batch size
+nlp = stanfordnlp.Pipeline(processors='tokenize,mwt,pos,lemma,depparse', treebank='en_ewt', use_gpu=False, pos_batch_size=3000) 
 
 def parse(text):
-
   doc = nlp(text)
-
   for sentence in doc.sentences:
     translation = translate(sentence)
     result = []
     for word in translation[0]:
       result.append((word['text'].lower(), word['lemma'].lower()))
-    print("\nResult: ", result, "\n")
   return result
 
 def getLemmaSequence(meta):
@@ -54,9 +49,7 @@ def getLemmaSequence(meta):
         fingerSpell = []
         for letter in word['text'].lower():
           spell = {}
-         
           pass
-        
           fingerSpell.append(spell)
 
       elif word['upos'] == 'CCONJ':
@@ -96,23 +89,20 @@ def getLemmaSequence(meta):
 
   return (translation, tone)
 def getMeta(sentence):
-
   englishStruct = {}
+
   aslStruct = {
     'rootElements':[],
     'UPOS': {
       'ADJ':[], 'ADP':[], 'ADV':[], 'AUX':[], 'CCONJ':[], 'DET':[], 'INTJ':[], 'NOUN':[], 'NUM':[], 'PART':[], 'PRON':[], 'PROPN':[], 'PUNCT':[], 'SCONJ':[], 'SYM':[], 'VERB':[], 'X':[]
     }
   }
-  reordered = []
 
+  reordered = []
   words = []
   for token in sentence.tokens:
-
     for word in token.words:
-      
       print(word.index, word.governor, word.text, word.lemma, word.upos, word.dependency_relation) 
-  
       j = len(words)
       for i, w in enumerate(words):
         if word.governor <= w['governor']:
@@ -124,8 +114,6 @@ def getMeta(sentence):
       words.insert(j, wordToDictionary(word))
 
   reordered = words
-
-
   return reordered
 
 def wordToDictionary(word):
@@ -149,4 +137,4 @@ def translate(parse):
 
 while True:
   userInput = input("Enter a sentence: ")
-  parse(userInput)
+  print(parse(userInput))
