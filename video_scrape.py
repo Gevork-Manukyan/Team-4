@@ -8,7 +8,9 @@ import requests # to download html page of sign savvy
 import time
 from bs4 import BeautifulSoup # to parse html page into video source
 
-tb_text = ["Hello","Night","Plane","Dance","LOL"] # test bench data
+tb_text = ["Hello","Night","Plane","Dance","LOL","Clock"] # test bench data
+#TODO: Get tokenized ASL syntax 
+# Speech to Text --> Text to ASL syntax --> (Input Here)
 
 # Setup play back of videos for later use
 vlc_instance = vlc.Instance()
@@ -35,6 +37,7 @@ for ii in tb_text:
         # Add video source to Media Playlists
         source_url = "https://www.signingsavvy.com/" + video_src
         vlc_media_list.insert_media(vlc_instance.media_new_location(source_url),position)
+        position += 1
         print(video_src)
     else:
         # Check if there is search results
@@ -54,11 +57,12 @@ for ii in tb_text:
                 # Add video to Media Playlists
                 sv_url = "https://www.signingsavvy.com/" + sv_src
                 vlc_media_list.insert_media(vlc_instance.media_new_location(sv_url),position)
+                position += 1
                 print(sv_src)
             else:
                 print('Could not find any video on token: ' + ii)
                 #TODO: Display the Finger spelling
-    position += 1
+    
 
 
 
