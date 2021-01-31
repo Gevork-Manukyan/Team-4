@@ -10,23 +10,27 @@ class SpeechEngine:
         self.cancelListen = None
 
     def start(self, callBack):
-        with sr.Microphone() as source:
-            self.r.adjust_for_ambient_noise(source)
+        if not self.amIListening:
+            self.amIListening = True
+            with sr.Microphone() as source:
+                self.r.adjust_for_ambient_noise(source)
 
-        def recognize_audio(recognizer, audio):
-            try:
-                recognized_audio = recognizer.recognize_google(audio) 
-                callBack(recognized_audio)
-               
-            except sr.UnknownValueError:
-                print("Sorry I didn't understant that!")
+            def recognize_audio(recognizer, audio):
+                try:
+                    recognized_audio = recognizer.recognize_google(audio) 
+                    callBack(recognized_audio)
+                
+                except sr.UnknownValueError:
+                    print("Sorry I didn't understant that!")
 
-        self.cancelListen = self.r.listen_in_background(source, recognize_audio)
-        print("Start recognition")
+            self.cancelListen = self.r.listen_in_background(source, recognize_audio)
+            print("Start recognition")
 
     def stop(self):
-        print("Stop Listening")
-        self.cancelListen()
+        if self.amIListening:
+            self.amIListening = False
+            print("Stop Listening")
+            self.cancelListen()
 
 
 def main():

@@ -11,7 +11,9 @@ speechEngine = SpeechEngine()
 aslRenderer = AslRenderer()
 
 def processText(text):
+    print("Plain text: " + str(text))
     words = parse(text)
+    print("ASL as text: " + str(words))
     aslRenderer.renderASL(words)
 
 
