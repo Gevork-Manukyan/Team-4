@@ -1,7 +1,23 @@
 import discord
 import os
+from AslRenderer import AslRenderer
+from convert import SpeechEngine
+from textParser import parse 
+import time
 
 client = discord.Client()
+
+speechEngine = SpeechEngine()
+aslRenderer = AslRenderer()
+
+def processText(text):
+
+    words = parse(text)
+    aslRenderer.renderASL(words)
+
+speechEngine.start(processText)
+time.sleep(50)
+speechEngine.stop()
 
 @client.event
 async def on_ready():

@@ -2,36 +2,38 @@ import speech_recognition as sr
 import time 
 
 
-class AshleyContext:
-    exit_app = False
+class SpeechEngine:
+    
+    def __init__(self):
+        self.amIListening = False
+        self.r = sr.Recognizer()
+        self.cancelListen = None
 
-def recognize_audio(recognizer, audio):
-    try:
+    def start(self, callBack):
+        with sr.Microphone() as source:
+            self.r.adjust_for_ambient_noise(source)
+
+        def recognize_audio(recognizer, audio):
+            try:
+                recognized_audio = recognizer.recognize_google(audio) 
+                callBack(recognized_audio)
+               
+            except sr.UnknownValueError:
+                print("Sorry I didn't understant that!")
+
+        self.cancelListen = self.r.listen_in_background(source, recognize_audio)
         print("Start recognition")
-        recognized_audio = recognizer.recognize_google(audio) 
-        print("You have said : \n " + recognized_audio)
-        if recognized_audio == "Ashley stop":
-            
-            AshleyContext.exit_app = True
 
-    except sr.UnknownValueError:
-        print("Sorry I didn't understant that!")
+    def stop(self):
+        self.cancelListen()
+
 
 def main():
-    r = sr.Recognizer()
-
-    with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source)
-
-    print("Please say something...")
-    audio = r.listen_in_background(source, recognize_audio)
     
-    while True:
-        time.sleep(1)
-        if AshleyContext.exit_app:
-            audio()
-            print("Thank you for using ashley.")
-            break
+    Engine = SpeechEngine()
+    Engine.start(print)
+    time.sleep(50)
+    Engine.stop()
         
        
 if __name__ == "__main__":
