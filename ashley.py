@@ -11,13 +11,9 @@ speechEngine = SpeechEngine()
 aslRenderer = AslRenderer()
 
 def processText(text):
-
     words = parse(text)
     aslRenderer.renderASL(words)
 
-speechEngine.start(processText)
-time.sleep(50)
-speechEngine.stop()
 
 @client.event
 async def on_ready():
@@ -28,8 +24,12 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    if message.content.startswith('$ashleyStart'):
+        speechEngine.start(processText)
+
+    
+    if message.content.startswith('$ashleyStop'):
+        speechEngine.stop()
 
 token = os.getenv('TOKEN')
 client.run(token)

@@ -25,6 +25,7 @@ class SpeechEngine:
         print("Start recognition")
 
     def stop(self):
+        print("Stop Listening")
         self.cancelListen()
 
 
