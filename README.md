@@ -51,10 +51,10 @@ Speech to ASL translator can run on any device and server which supports the ins
 
 ## Commands
 
-"$ashleyStart"  This commands the bot to start listening and will translate anythin spoken to ASL via a video and also shows a caption
+'''$ashleyStart'''  This commands the bot to start listening and will translate anythin spoken to ASL via a video and also shows a caption
 
 
-"$ashleyStop" This command stops the listening process
+'''$ashleyStop''' This command stops the listening process
 
 
 
